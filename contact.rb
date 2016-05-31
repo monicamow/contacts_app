@@ -72,13 +72,13 @@ class Contact
     
     def search(term) #SEARCH
       # THIS IS SO DISGUSTING MUST FIX THIS
-      # returns and counts all instances of beyonce...
+      # edge cases...returns and counts all instances of term...
       @search_results = []
       @found_term = false
       CSV.open('contacts.csv', 'r') do |file|
         file.readlines.each do |line|
           line.each do |field|
-            if field.downcase.match(term)
+            if field.downcase.include?(term)
               @search_results << line
               @found_term = true
             end
