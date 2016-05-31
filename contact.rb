@@ -13,11 +13,11 @@ class Contact
   class << self
 
     def all #LIST
+      # disgusting hash must fix!!!
       CSV.foreach('contacts.csv', :col_sep => ',') do |row|
         contact_list = {
           row[0] => [row[1],row[2]]
           }
-          #row[0] => row[2] # PRINT ID SOMEHOW
         contact_list.each do |name, info|
           puts info[1] + ": " + name + " (" + info[0] + ")"
         end
