@@ -72,21 +72,24 @@ class Contact
     def search(term) #SEARCH
       # THIS IS SO DISGUSTING MUST FIX THIS
 
-      @found_term = nil
+      @search_results = []
+      @found_term = false
       @term = term
       CSV.open('contacts.csv', 'r') do |file|
         file.readlines.each do |line|
           line.each do |field|
             if field.downcase.include?(@term)
-              @found_term = line
+              @search_results << line
+              @found_term = true
             end
           end
         end
       end
-      if @found_term.nil?
+      if @found_term == false
         puts "not found"
       else
-        puts @found_term
+        p @search_results
+        puts "---\n#{@search_results.size} records total"
       end
     end
 
