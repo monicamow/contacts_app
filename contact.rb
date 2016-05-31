@@ -79,7 +79,7 @@ class Contact
         file.readlines.each do |line|
           line.each do |field|
             if field.downcase.match(term)
-              @search_results << line
+              @search_results << line unless @search_results.include?(line)
               @found_term = true
             end
           end
