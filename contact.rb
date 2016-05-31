@@ -41,6 +41,7 @@ class Contact
       p @contact_array
 
       # doesn't create new file if file doesn't exist...
+      
       CSV.open('contacts.csv', 'a+') do |csv_object|
           csv_object << @contact_array 
       end
@@ -48,7 +49,7 @@ class Contact
     end
 
     def create_id 
-      number_of_records = CSV.open('contacts.csv').readlines.size
+      number_of_records = CSV.open('contacts.csv', 'a+').readlines.size
       (number_of_records + 1).to_s
     end
     
