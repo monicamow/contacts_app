@@ -41,7 +41,7 @@ class Contact
       p @contact_array
 
       # doesn't create new file if file doesn't exist...
-      
+
       CSV.open('contacts.csv', 'a+') do |csv_object|
           csv_object << @contact_array 
       end
@@ -72,14 +72,13 @@ class Contact
     
     def search(term) #SEARCH
       # THIS IS SO DISGUSTING MUST FIX THIS
-
+      # returns and counts all instances of beyonce...
       @search_results = []
       @found_term = false
-      @term = term
       CSV.open('contacts.csv', 'r') do |file|
         file.readlines.each do |line|
           line.each do |field|
-            if field.downcase.include?(@term)
+            if field.downcase.match(term)
               @search_results << line
               @found_term = true
             end

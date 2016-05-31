@@ -23,14 +23,16 @@ class ContactList
       Contact.create
     when "list"
       Contact.all
-    end
-    case ARGV[1]
-    when /\d/
-      Contact.find(ARGV[1])
-    when /\w/
-      Contact.search(ARGV[1])     
-    # else
-    #   puts "I don't understand."
+    when
+
+      case ARGV[1]
+      when /\d/
+        Contact.find(ARGV[1])
+      when /\w/
+        Contact.search(ARGV[1])     
+      when nil
+         puts "I don't understand. You need to ask me to search/show something."
+      end
     end
 
   end
