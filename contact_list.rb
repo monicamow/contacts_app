@@ -23,11 +23,18 @@ class ContactList
       Contact.create
     when "list"
       Contact.all
-    when
+    when "show"
 
       case ARGV[1]
       when /\d/
         Contact.find(ARGV[1])
+      when nil
+         puts "I don't understand. You need to ask me to search/show something."
+      end
+      
+    when "search"
+
+      case ARGV[1]
       when /\w/
         Contact.search(ARGV[1])     
       when nil
