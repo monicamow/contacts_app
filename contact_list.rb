@@ -37,7 +37,9 @@ class ContactList
 
       when "list"
         all_contacts = Contact.all
-        puts "#{all_contacts} ... here they are"
+        all_contacts.each do |contact|
+          puts "#{contact[2]}: #{contact[0]}(#{contact[1]})"
+        end
 
       when "show"
 
