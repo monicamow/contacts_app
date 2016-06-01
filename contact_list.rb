@@ -23,24 +23,32 @@ class ContactList
         puts "What is the name of the contact?"
         name_input = STDIN.gets.chomp.strip
         @contact_array <<  name_input
+
         puts "What is the email of the contact?"
         email_input = STDIN.gets.chomp.strip
         @contact_array <<  email_input
 
         new_id = Contact.create_id
         @contact_array << new_id
+
         puts Contact.new(name_input, email_input)
         
         Contact.create(@contact_array)
 
       when "list"
-        Contact.all
+        all_contacts = Contact.all
+        puts "#{all_contacts} ... here they are"
 
       when "show"
 
         case ARGV[1]
         when /\d/
-          Contact.find(ARGV[1])
+          found_id = Contact.find(ARGV[1])
+          if found_id.nil?
+            puts "not found"
+          else
+            puts "#{found_id} ... here it is"
+          end
         when nil
            display_menu 
         end 
@@ -50,7 +58,12 @@ class ContactList
         case ARGV[1]
 
         when /\w/
-          puts Contact.search(ARGV[1]) 
+          search_results = Contact.search(ARGV[1])
+          if search_results.empty?
+            puts "not found"
+          else
+            puts "#{search_results} ... hello"
+          end
         when nil
            display_menu
         end

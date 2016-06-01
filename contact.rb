@@ -22,14 +22,7 @@ class Contact
     def all #LIST
       # TODO: Return an Array of Contact instances made from the data in 'contacts.csv'.
       # disgusting hash must fix!!!
-      CSV.foreach('contacts.csv', :col_sep => ',') do |row|
-        contact_list = {
-          row[0] => [row[1],row[2]]
-          }
-        contact_list.each do |name, info|
-          puts info[1] + ": " + name + " (" + info[0] + ")"
-        end
-      end  
+      CSV.read('contacts.csv')
     end
 
     # Creates a new contact, adding it to the csv file, returning the new contact.
@@ -57,7 +50,6 @@ class Contact
     # @return [Contact, nil] the contact with the specified id. If no contact has the id, returns nil.
     def find(id) #SHOW
       # TODO: Find the Contact in the 'contacts.csv' file with the matching id.
-      @found_id = nil
       @id = id.to_i - 1
       CSV.open('contacts.csv', 'r') do |file|
         file.readlines.each_with_index do |line,index|
@@ -66,11 +58,7 @@ class Contact
           end
         end
       end
-      if @found_id.nil?
-        puts "not found"
-      else
-        puts @found_id
-      end
+      return @found_id
     end
   
     # Search for contacts by either name or email.
@@ -81,25 +69,16 @@ class Contact
       # THIS IS SO DISGUSTING MUST FIX THIS
       # returns and counts all instances of beyonce...
       @search_results = []
-      @found_term = false
       CSV.open('contacts.csv', 'r') do |file|
         file.readlines.each do |line|
           line.each do |field|
             if field.downcase.match(term)
               @search_results << line unless @search_results.include?(line)
-              @found_term = true
             end
           end
         end
       end
-
-      if @found_term == false
-        return "not found"
-      else
-        return @search_results
-        return "---\n#{@search_results.size} records total"
-      end
-
+      return @search_results
     end
 
   end
