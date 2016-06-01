@@ -4,7 +4,7 @@ require 'csv'
 # The ContactList class will work with Contact objects instead of interacting with the CSV file directly
 class Contact
 
-  attr_accessor :name, :email, :id
+  attr_reader :name, :email, :id
 
   # Creates a new contact object
   # @param name [String] The contact's name
@@ -22,7 +22,14 @@ class Contact
     # @return [Array<Contact>] Array of Contact objects
     def all #LIST
       # TODO: Return an Array of Contact instances made from the data in 'contacts.csv'.
-      CSV.read('contacts.csv')
+      @all_contacts = []
+      CSV.open('contacts.csv', 'r') do |file|
+        file.readlines.each do |line|
+            contact = Contact.new(line[0], line[1], line[2])
+            @all_contacts << contact
+        end
+      end
+      return @all_contacts
     end
 
     # Creates a new contact, adding it to the csv file, returning the new contact.

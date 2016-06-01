@@ -39,7 +39,7 @@ class ContactList
       when "list"
         all_contacts = Contact.all
         all_contacts.each do |contact|
-          puts "#{contact[2]}: #{contact[0]}(#{contact[1]})"
+          puts "#{contact.id}: #{contact.name}(#{contact.email})"
         end
 
       when "show"
