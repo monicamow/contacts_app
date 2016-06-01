@@ -49,7 +49,7 @@ class ContactList
           if found_id.nil?
             puts "not found"
           else
-            puts "#{found_id} ... here it is"
+            puts found_id
           end
         when nil
            display_menu 
@@ -64,7 +64,10 @@ class ContactList
           if search_results.empty?
             puts "not found"
           else
-            puts "#{search_results} ... hello"
+            search_results.each do |contact|
+              puts "#{contact[2]}: #{contact[0]}(#{contact[1]})"
+            end
+            puts "---\n#{search_results.size} records total"
           end
         when nil
            display_menu
