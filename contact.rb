@@ -9,9 +9,10 @@ class Contact
   # Creates a new contact object
   # @param name [String] The contact's name
   # @param email [String] The contact's email address
-  def initialize(name, email)
+  def initialize(name, email, id) # *** add ID to initialize
     @name = name
     @email = email
+    @id = id
   end
 
   # Provides functionality for managing contacts in the csv file.
@@ -21,7 +22,6 @@ class Contact
     # @return [Array<Contact>] Array of Contact objects
     def all #LIST
       # TODO: Return an Array of Contact instances made from the data in 'contacts.csv'.
-      # disgusting hash must fix!!!
       CSV.read('contacts.csv')
     end
 
@@ -40,7 +40,7 @@ class Contact
 
     # Creates a new contact ID based on the number of existing records in contacts.csv
     # returns number of rows as string
-    def create_id 
+    def create_id # *** add ID to initialize
       number_of_records = CSV.open('contacts.csv', 'a+').readlines.size
       (number_of_records + 1).to_s
     end

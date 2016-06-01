@@ -31,7 +31,7 @@ class ContactList
         new_id = Contact.create_id
         @contact_array << new_id
 
-        puts Contact.new(name_input, email_input)
+        puts Contact.new(name_input, email_input, new_id) # *** add ID to initialize
         
         Contact.create(@contact_array)
 
@@ -68,6 +68,8 @@ class ContactList
            display_menu
         end
 
+      when nil
+        display_menu
       end
 
   end
