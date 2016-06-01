@@ -4,7 +4,7 @@ require 'csv'
 # The ContactList class will work with Contact objects instead of interacting with the CSV file directly
 class Contact
 
-  attr_accessor :name, :email
+  attr_accessor :name, :email, :id
 
   # Creates a new contact object
   # @param name [String] The contact's name
@@ -41,6 +41,7 @@ class Contact
     # Creates a new contact ID based on the number of existing records in contacts.csv
     # returns number of rows as string
     def create_id # *** add ID to initialize
+      # ID SHOULD BE LARGEST ID CREATED + 1 (ENSURES UNIQUENESS)
       number_of_records = CSV.open('contacts.csv', 'a+').readlines.size
       (number_of_records + 1).to_s
     end

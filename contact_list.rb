@@ -31,6 +31,7 @@ class ContactList
         new_id = Contact.create_id
         @contact_array << new_id
 
+        # need array of <Contacts> NOT array of arrays
         puts Contact.new(name_input, email_input, new_id) # *** add ID to initialize
         
         Contact.create(@contact_array)
