@@ -35,11 +35,11 @@ class Contact
     # Creates a new contact, adding it to the csv file, returning the new contact.
     # @param name [String] the new contact's name
     # @param email [String] the contact's email
-    def create(name_input, email_input, new_id)
+    def create(name_input, email_input, new_id) # define new parameters so they don't conflict with attr_readers
       # TODO: Instantiate a Contact, add its data to the 'contacts.csv' file, and return it.
       new_contact = Contact.new(name_input, email_input, new_id)
       contact_array = [new_contact.name, new_contact.email, new_contact.id]
-      
+
       CSV.open('contacts.csv', 'a+') do |csv_object|
           csv_object << contact_array 
       end
@@ -52,8 +52,11 @@ class Contact
     # returns number of rows as string
     def create_id # *** add ID to initialize
       # ID SHOULD BE LARGEST ID CREATED + 1 (ENSURES UNIQUENESS)
-      number_of_records = CSV.open('contacts.csv', 'a+').readlines.size
-      (number_of_records + 1).to_s
+      contacts = all
+      next_id = contacts.reduce(0) do |id, contact|
+        id = contact.id.to_i + 1 if contact.id.to_i >= id
+        id
+      end
     end
     
     # Find the Contact in the 'contacts.csv' file with the matching id.
