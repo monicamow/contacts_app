@@ -35,14 +35,17 @@ class Contact
     # Creates a new contact, adding it to the csv file, returning the new contact.
     # @param name [String] the new contact's name
     # @param email [String] the contact's email
-    def create(contact_array)
+    def create(name_input, email_input, new_id)
       # TODO: Instantiate a Contact, add its data to the 'contacts.csv' file, and return it.
+      new_contact = Contact.new(name_input, email_input, new_id)
+      contact_array = [new_contact.name, new_contact.email, new_contact.id]
+      
       CSV.open('contacts.csv', 'a+') do |csv_object|
           csv_object << contact_array 
       end
 
-      puts "The contact, \"#{contact_array[0]}\" (#{contact_array[1]}), \
-      \nwas created with a new ID of #{contact_array[2]}."
+      puts "The contact, \"#{new_contact.name}\" (#{new_contact.email}), \
+      \nwas created with a new ID of #{new_contact.id}."
     end
 
     # Creates a new contact ID based on the number of existing records in contacts.csv

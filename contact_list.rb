@@ -17,30 +17,27 @@ class ContactList
   def self.run_program
 
     case ARGV[0]
-      when "new"
-        @contact_array = []
-
-        puts "What is the name of the contact?"
-        name_input = STDIN.gets.chomp.strip
-        @contact_array <<  name_input
-
-        puts "What is the email of the contact?"
-        email_input = STDIN.gets.chomp.strip
-        @contact_array <<  email_input
-
-        new_id = Contact.create_id
-        @contact_array << new_id
-
-        # need array of <Contacts> NOT array of arrays
-        puts Contact.new(name_input, email_input, new_id) # *** add ID to initialize
-        
-        Contact.create(@contact_array)
-
       when "list"
         all_contacts = Contact.all
         all_contacts.each do |contact|
           puts "#{contact.id}: #{contact.name}(#{contact.email})"
         end
+
+      when "new"
+        @contact_array = []
+
+        puts "What is the name of the contact?"
+        name_input = STDIN.gets.chomp.strip
+
+        puts "What is the email of the contact?"
+        email_input = STDIN.gets.chomp.strip
+
+        new_id = Contact.create_id
+
+        # need array of <Contacts> NOT array of arrays
+        #puts Contact.new(name_input, email_input, new_id) # *** add ID to initialize
+        
+        Contact.create(name_input, email_input, new_id)
 
       when "show"
 
