@@ -64,14 +64,11 @@ class Contact
     # @return [Contact, nil] the contact with the specified id. If no contact has the id, returns nil.
     def find(id) #SHOW
       # TODO: Find the Contact in the 'contacts.csv' file with the matching id.
-      @id = id.to_i - 1
-      CSV.open('contacts.csv', 'r') do |file|
-        file.readlines.each_with_index do |line,index|
-          if index == @id
-            @found_id = line
+        all.each do |contact|
+          if contact.id == id
+            @found_id = contact
           end
         end
-      end
       return @found_id
     end
   

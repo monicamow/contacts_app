@@ -47,7 +47,7 @@ class ContactList
           if found_id.nil?
             puts "not found"
           else
-            puts found_id
+            puts "ID: #{found_id.id}\nNAME: #{found_id.name}\nEMAIL: #{found_id.email}"
           end
         when nil
            display_menu 
