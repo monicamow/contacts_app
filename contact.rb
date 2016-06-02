@@ -44,8 +44,7 @@ class Contact
           csv_object << contact_array 
       end
 
-      puts "The contact, \"#{new_contact.name}\" (#{new_contact.email}), \
-      \nwas created with a new ID of #{new_contact.id}."
+      return new_contact
     end
 
     # Creates a new contact ID based on the number of existing records in contacts.csv
@@ -83,7 +82,7 @@ class Contact
         all.each do |contact|
           contact_array = [contact.name, contact.email,contact.id]
           contact_array.each do |field|
-            if field.match(term)
+            if field.downcase.match(term)
               @search_results << contact_array unless @search_results.include?(contact_array)
             end
           end

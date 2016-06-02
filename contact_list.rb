@@ -16,11 +16,17 @@ class ContactList
 
   def self.run_program
 
-    case ARGV[0]
+    # commands typed by use from terminal
+    menu = {
+      command: ARGV[0],
+      argument: ARGV[1]
+    }
+
+    case menu[:command]
       when "list"
         all_contacts = Contact.all
         all_contacts.each do |contact|
-          puts "#{contact.id}: #{contact.name}(#{contact.email})"
+          puts "#{contact.id}: #{contact.name} (#{contact.email})"
         end
 
       when "new"
@@ -37,13 +43,15 @@ class ContactList
         # need array of <Contacts> NOT array of arrays
         #puts Contact.new(name_input, email_input, new_id) # *** add ID to initialize
         
-        Contact.create(name_input, email_input, new_id)
+        new_contact = Contact.create(name_input, email_input, new_id)
+        puts "The contact, \"#{new_contact.name}\" (#{new_contact.email}), \
+        \nwas created with a new ID of #{new_contact.id}."
 
       when "show"
 
-        case ARGV[1]
+        case menu[:argument]
         when /\d/
-          found_id = Contact.find(ARGV[1])
+          found_id = Contact.find(menu[:argument])
           if found_id.nil?
             puts "not found"
           else
@@ -55,10 +63,10 @@ class ContactList
 
       when "search"
 
-        case ARGV[1]
+        case menu[:argument]
 
         when /\w/
-          search_results = Contact.search(ARGV[1])
+          search_results = Contact.search(menu[:argument])
           if search_results.empty?
             puts "not found"
           else
@@ -79,4 +87,5 @@ class ContactList
 
 end
 
+# code entry point
 ContactList.run_program
