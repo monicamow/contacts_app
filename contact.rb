@@ -80,15 +80,14 @@ class Contact
       # THIS IS SO DISGUSTING MUST FIX THIS
       # returns and counts all instances of beyonce...
       @search_results = []
-      CSV.open('contacts.csv', 'r') do |file|
-        file.readlines.each do |line|
-          line.each do |field|
-            if field.downcase.match(term)
-              @search_results << line unless @search_results.include?(line)
+        all.each do |contact|
+          contact_array = [contact.name, contact.email,contact.id]
+          contact_array.each do |field|
+            if field.match(term)
+              @search_results << contact_array unless @search_results.include?(contact_array)
             end
           end
         end
-      end
       return @search_results
     end
 

@@ -63,7 +63,7 @@ class ContactList
             puts "not found"
           else
             search_results.each do |contact|
-              puts "#{contact[2]}: #{contact[0]}(#{contact[1]})"
+              puts "#{contact[2]}: #{contact[0]} (#{contact[1]})"
             end
             puts "---\n#{search_results.size} records total"
           end
