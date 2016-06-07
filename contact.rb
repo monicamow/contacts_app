@@ -19,6 +19,8 @@ class Contact
     password: 'development'
     )
 
+  @@found_id_hash
+
   # Creates a new contact object
   # @param name [String] The contact's name
   # @param email [String] The contact's email address
@@ -50,7 +52,15 @@ class Contact
     contact_obj
   end
 
-  def self.find
+  # execute an SQL statement 
+  # convert the resulting data into a new Contact before returning it
+  def self.find(id)
+    found_id = @@conn.exec("SELECT * FROM contacts WHERE id=$1::int;", [id])
+    found_id.each do |info|
+      @@found_id_hash = info
+    end
+    found_id_obj = Contact.new(@@found_id_hash["name"], @@found_id_hash["email"], @@found_id_hash["id"].to_i)
+    found_id_obj
   end
 
   def self.search
@@ -78,7 +88,8 @@ class Contact
 
 end
 
-Contact.create("William Young", "wyoung@yahoo.com")
-Contact.all
+#Contact.create("Jay-Z", "jigga@hotmail.com")
+
+p Contact.find("1")
 
 
