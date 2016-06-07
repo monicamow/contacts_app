@@ -19,7 +19,8 @@ class Contact
     password: 'development'
     )
 
-  @@found_id_hash
+  @@found_id_hash = nil
+  @@searched_id_hash = nil
 
   # Creates a new contact object
   # @param name [String] The contact's name
@@ -63,7 +64,13 @@ class Contact
     found_id_obj
   end
 
-  def self.search
+  def self.search(term)
+    searched_id = @@conn.exec("SELECT * FROM contacts WHERE LOWER(name) LIKE $1::text OR LOWER(email) LIKE $1::text;", ['%' + term.downcase + '%'])
+    searched_id.each do |info|
+      @@searched_id_hash = info
+    end
+    searched_id_obj = Contact.new(@@searched_id_hash["name"], @@searched_id_hash["email"], @@searched_id_hash["id"].to_i)
+    searched_id_obj
   end
 
 
@@ -89,7 +96,6 @@ class Contact
 end
 
 #Contact.create("Jay-Z", "jigga@hotmail.com")
-
-p Contact.find("1")
+p Contact.search("Monica Mow")
 
 
