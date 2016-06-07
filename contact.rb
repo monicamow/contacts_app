@@ -81,3 +81,5 @@ end
 Contact.create("William Young", "wyoung@yahoo.com")
 Contact.all
 
+puts "blah"
+
