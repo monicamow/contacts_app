@@ -42,7 +42,7 @@ class Contact
     @@conn.exec("SELECT * FROM contacts ORDER BY id ASC;").each do |contact|
       results <<  Contact.new(contact["name"], contact["email"], contact["id"].to_i)
     end
-    p results
+    results
   end
 
   def self.create(name, email)
@@ -52,9 +52,13 @@ class Contact
     contact_obj
   end
 
-  # def self.update
-  #   # calls #save, .find methods
-  # end
+  def self.update(id, new_name, new_email)
+    # calls #save, .find methods
+    contact_to_update = Contact.find(id)
+    contact_to_update.name = new_name
+    contact_to_update.email = new_email
+    contact_to_update.save
+  end
 
   # execute an SQL statement 
   # convert the resulting data into a new Contact before returning it
@@ -98,7 +102,12 @@ class Contact
 end
 
 #Contact.create("Jay-Z", "jigga@hotmail.com")
-p Contact.search("young")
+#p Contact.search("hotmail")
 #p Contact.find("2")
+
+# update William (id = 3, 4, 5, 6)
+#p Contact.update(5, "Bart Simpson", "bart@bart.com")
+
+#p Contact.all
 
 
