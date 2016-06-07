@@ -16,40 +16,46 @@ class ContactList
 
   def self.run_program
 
-    case ARGV[0]
+    # commands typed by use from terminal
+    menu = {
+      command: ARGV[0],
+      argument: ARGV[1]
+    }
+
+    case menu[:command]
+      when "list"
+        all_contacts = Contact.all
+        all_contacts.each do |contact|
+          puts "#{contact.id}: #{contact.name} (#{contact.email})"
+        end
+
       when "new"
         @contact_array = []
 
         puts "What is the name of the contact?"
         name_input = STDIN.gets.chomp.strip
-        @contact_array <<  name_input
 
         puts "What is the email of the contact?"
         email_input = STDIN.gets.chomp.strip
-        @contact_array <<  email_input
 
         new_id = Contact.create_id
-        @contact_array << new_id
 
-        puts Contact.new(name_input, email_input, new_id) # *** add ID to initialize
+        # need array of <Contacts> NOT array of arrays
+        #puts Contact.new(name_input, email_input, new_id) # *** add ID to initialize
         
-        Contact.create(@contact_array)
-
-      when "list"
-        all_contacts = Contact.all
-        all_contacts.each do |contact|
-          puts "#{contact[2]}: #{contact[0]}(#{contact[1]})"
-        end
+        new_contact = Contact.create(name_input, email_input, new_id)
+        puts "The contact, \"#{new_contact.name}\" (#{new_contact.email}), \
+        \nwas created with a new ID of #{new_contact.id}."
 
       when "show"
 
-        case ARGV[1]
+        case menu[:argument]
         when /\d/
-          found_id = Contact.find(ARGV[1])
+          found_id = Contact.find(menu[:argument])
           if found_id.nil?
             puts "not found"
           else
-            puts found_id
+            puts "ID: #{found_id.id}\nNAME: #{found_id.name}\nEMAIL: #{found_id.email}"
           end
         when nil
            puts "You must put what you want to show i.e. 'show 4'"
@@ -57,15 +63,15 @@ class ContactList
 
       when "search"
 
-        case ARGV[1]
+        case menu[:argument]
 
         when /\w/
-          search_results = Contact.search(ARGV[1])
+          search_results = Contact.search(menu[:argument])
           if search_results.empty?
             puts "not found"
           else
             search_results.each do |contact|
-              puts "#{contact[2]}: #{contact[0]}(#{contact[1]})"
+              puts "#{contact[2]}: #{contact[0]} (#{contact[1]})"
             end
             puts "---\n#{search_results.size} records total"
           end
@@ -81,4 +87,5 @@ class ContactList
 
 end
 
+# code entry point
 ContactList.run_program
