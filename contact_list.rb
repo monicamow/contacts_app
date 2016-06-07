@@ -52,7 +52,7 @@ class ContactList
             puts found_id
           end
         when nil
-           display_menu 
+           puts "You must put what you want to show i.e. 'show 4'"
         end 
 
       when "search"
@@ -70,7 +70,7 @@ class ContactList
             puts "---\n#{search_results.size} records total"
           end
         when nil
-           display_menu
+           puts "You must put what you want to search for i.e. 'search beyonce'"
         end
 
       when nil
