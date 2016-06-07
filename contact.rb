@@ -95,7 +95,10 @@ class Contact
   end
 
 
-  def destroy
+  def self.destroy(id)
+    contact_to_delete = Contact.find(id)
+    @@conn.exec("DELETE FROM contacts WHERE id=$1::int;", [id])
+    puts "Contact deleted."
   end
 
 
@@ -108,6 +111,8 @@ end
 # update William (id = 3, 4, 5, 6)
 #p Contact.update(5, "Bart Simpson", "bart@bart.com")
 
-#p Contact.all
+p Contact.all
+
+#p Contact.destroy(8)
 
 
