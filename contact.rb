@@ -47,9 +47,9 @@ class Contact
 
   def self.create(name, email)
     # calls #save method
-    contact_obj = Contact.new(name, email)
-    contact_obj.save
-    contact_obj
+      contact_obj = Contact.new(name, email)
+      contact_obj.save
+      contact_obj
   end
 
   # execute an SQL statement 
@@ -72,6 +72,9 @@ class Contact
     return search_results
   end
 
+  def self.unique_email?(email)
+    Contact.search(email).empty?
+  end
 
   ####################
   # INSTANCE METHODS #
@@ -91,9 +94,4 @@ class Contact
     @@conn.exec("DELETE FROM contacts WHERE id=$1::int;", [id])
   end
 
-  def thing
-    puts "hi"
-  end
-
 end
-

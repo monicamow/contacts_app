@@ -34,15 +34,25 @@ class ContactList
         puts "What is the name of the contact?"
         name_input = STDIN.gets.chomp.strip
 
-        puts "What is the email of the contact?"
-        email_input = STDIN.gets.chomp.strip
+        duplicate_found = true
 
-        # need array of <Contacts> NOT array of arrays
-        #puts Contact.new(name_input, email_input, new_id) # *** add ID to initialize
-        
-        new_contact = Contact.create(name_input, email_input)
-        puts "The contact, \"#{new_contact.name}\" (#{new_contact.email}), \
-        \nwas created with a new ID of #{new_contact.id}."
+        while duplicate_found do
+          
+          puts "What is the email of the contact?"
+          email_input = STDIN.gets.chomp.strip
+
+          # need array of <Contacts> NOT array of arrays
+          #puts Contact.new(name_input, email_input, new_id) # *** add ID to initialize
+
+          if Contact.unique_email?(email_input)
+            duplicate_found = false
+            new_contact = Contact.create(name_input, email_input)
+            puts "The contact, \"#{new_contact.name}\" (#{new_contact.email}), \
+            \nwas created with a new ID of #{new_contact.id}."
+          else
+            puts "Sorry, that email already exists."
+          end
+        end
 
       when "update"
 
