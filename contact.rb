@@ -1,7 +1,7 @@
 require 'pg'
 
 # Represents a person in an address book.
-# The ContactList class will work with Contact objects instead of interacting with the CSV file directly
+# The ContactList class will work with Contact objects instead of interacting with the database file directly
 
 # 1) CONNECT
 # 2) INITIALIZE
@@ -50,14 +50,6 @@ class Contact
     contact_obj = Contact.new(name, email)
     contact_obj.save
     contact_obj
-  end
-
-  def self.update(id, new_name, new_email)
-    # calls #save, .find methods
-    contact_to_update = Contact.find(id)
-    contact_to_update.name = new_name
-    contact_to_update.email = new_email
-    contact_to_update.save
   end
 
   # execute an SQL statement 

@@ -55,7 +55,10 @@ class ContactList
         puts "What is the NEW email of the contact?"
         email_input = STDIN.gets.chomp.strip
 
-        updated_contact = Contact.update(menu[:argument], name_input, email_input)
+        updated_contact = Contact.find(menu[:argument])
+        updated_contact.name = name_input
+        updated_contact.email = email_input
+        updated_contact.save
 
         puts "The contact with ID of #{updated_contact.id} was updated to: \
         \n#{updated_contact.name} (#{updated_contact.email})"
