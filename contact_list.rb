@@ -30,7 +30,6 @@ class ContactList
         end
 
       when "new"
-        @contact_array = []
 
         puts "What is the name of the contact?"
         name_input = STDIN.gets.chomp.strip
@@ -38,14 +37,30 @@ class ContactList
         puts "What is the email of the contact?"
         email_input = STDIN.gets.chomp.strip
 
-        new_id = Contact.create_id
-
         # need array of <Contacts> NOT array of arrays
         #puts Contact.new(name_input, email_input, new_id) # *** add ID to initialize
         
-        new_contact = Contact.create(name_input, email_input, new_id)
+        new_contact = Contact.create(name_input, email_input)
         puts "The contact, \"#{new_contact.name}\" (#{new_contact.email}), \
         \nwas created with a new ID of #{new_contact.id}."
+
+      when "update"
+
+        case menu[:argument]
+        when /\d/
+
+        puts "What is the NEW name of the contact?"
+        name_input = STDIN.gets.chomp.strip
+
+        puts "What is the NEW email of the contact?"
+        email_input = STDIN.gets.chomp.strip
+
+        updated_contact = Contact.update(menu[:argument], name_input, email_input)
+
+        puts "The contact with ID of #{updated_contact.id} was updated to: \
+        \n#{updated_contact.name} (#{updated_contact.email})"
+
+        end
 
       when "show"
 
@@ -71,12 +86,27 @@ class ContactList
             puts "not found"
           else
             search_results.each do |contact|
-              puts "#{contact[2]}: #{contact[0]} (#{contact[1]})"
+              puts "#{contact.id}: #{contact.name} (#{contact.email})"
             end
             puts "---\n#{search_results.size} records total"
           end
         when nil
            puts "You must put what you want to search for i.e. 'search beyonce'"
+        end
+
+      when "delete"
+
+        case menu[:argument]
+
+        when /\d/
+          contact_to_delete = Contact.find(menu[:argument])
+          if contact_to_delete.nil?
+            puts "not found"
+          else
+            contact_to_delete.destroy(menu[:argument])
+          end
+        when nil
+           puts "You must put what you want to destroy for i.e. 'delete 5'"
         end
 
       when nil

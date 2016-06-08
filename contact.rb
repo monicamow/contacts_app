@@ -67,8 +67,9 @@ class Contact
     found_id.each do |info|
       @@found_id_hash = info
     end
-    found_id_obj = Contact.new(@@found_id_hash["name"], @@found_id_hash["email"], @@found_id_hash["id"].to_i)
-    found_id_obj
+    unless @@found_id_hash.nil?
+      Contact.new(@@found_id_hash["name"], @@found_id_hash["email"], @@found_id_hash["id"].to_i)
+    end
   end
 
   def self.search(term)
@@ -76,7 +77,7 @@ class Contact
     @@conn.exec("SELECT * FROM contacts WHERE LOWER(name) LIKE $1::text OR LOWER(email) LIKE $1::text;", ['%' + term.downcase + '%']).each do |contact|
         search_results << Contact.new(contact["name"], contact["email"], contact["id"].to_i)
     end
-    search_results
+    return search_results
   end
 
 
@@ -94,25 +95,9 @@ class Contact
     self
   end
 
-
-  def self.destroy(id)
-    contact_to_delete = Contact.find(id)
+  def destroy(id)
     @@conn.exec("DELETE FROM contacts WHERE id=$1::int;", [id])
-    puts "Contact deleted."
   end
 
-
 end
-
-#Contact.create("Jay-Z", "jigga@hotmail.com")
-#p Contact.search("hotmail")
-#p Contact.find("2")
-
-# update William (id = 3, 4, 5, 6)
-#p Contact.update(5, "Bart Simpson", "bart@bart.com")
-
-p Contact.all
-
-#p Contact.destroy(8)
-
 
