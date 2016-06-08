@@ -91,5 +91,9 @@ class Contact
     @@conn.exec("DELETE FROM contacts WHERE id=$1::int;", [id])
   end
 
+  def thing
+    puts "hi"
+  end
+
 end
 
