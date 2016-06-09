@@ -1,7 +1,8 @@
 require 'pry' # in case you want to use binding.pry
 require 'active_record'
-require_relative 'lib/store'
-require_relative 'lib/employee'
+require_relative 'lib/contact'
+require_relative 'lib/contact_list'
+require_relative 'lib/phone_number'
 
 # Output messages from Active Record to standard out
 ActiveRecord::Base.logger = Logger.new(STDOUT)
@@ -9,7 +10,7 @@ ActiveRecord::Base.logger = Logger.new(STDOUT)
 puts 'Establishing connection to database ...'
 ActiveRecord::Base.establish_connection(
   adapter: 'postgresql',
-  database: 'ar_exercises',
+  database: 'ar_contacts',
   username: 'development',
   password: 'development',
   host: 'localhost',
@@ -23,20 +24,18 @@ puts 'CONNECTED'
 puts 'Setting up Database (recreating tables) ...'
 
 ActiveRecord::Schema.define do
-  drop_table :stores if ActiveRecord::Base.connection.table_exists?(:stores)
-  drop_table :employees if ActiveRecord::Base.connection.table_exists?(:employees)
-  create_table :stores do |t|
-    t.column :name, :string
-    t.column :annual_revenue, :integer
-    t.column :mens_apparel, :boolean
-    t.column :womens_apparel, :boolean
+  #drop_table :stores if ActiveRecord::Base.connection.table_exists?(:stores)
+  #drop_table :employees if ActiveRecord::Base.connection.table_exists?(:employees)
+  create_table :contacts do |t|
+    t.column :first_name, :string
+    t.column :last_name, :string
+    t.column :email, :string
     t.timestamps null: false
   end
-  create_table :employees do |table|
-    table.references :store
-    table.column :first_name, :string
-    table.column :last_name, :string
-    table.column :hourly_rate, :integer
+  create_table :phone_numbers do |table|
+    table.references :contact
+    table.column :kind, :string
+    table.column :phone_number, :string
     table.timestamps null: false
   end
 end
