@@ -1,8 +1,5 @@
 require 'pry' # in case you want to use binding.pry
 require 'active_record'
-require_relative 'lib/contact'
-require_relative 'lib/contact_list'
-require_relative 'lib/phone_number'
 
 # Output messages from Active Record to standard out
 ActiveRecord::Base.logger = Logger.new(STDOUT)
@@ -24,8 +21,8 @@ puts 'CONNECTED'
 puts 'Setting up Database (recreating tables) ...'
 
 ActiveRecord::Schema.define do
-  #drop_table :stores if ActiveRecord::Base.connection.table_exists?(:stores)
-  #drop_table :employees if ActiveRecord::Base.connection.table_exists?(:employees)
+  drop_table :contacts if ActiveRecord::Base.connection.table_exists?(:contacts)
+  drop_table :phone_numbers if ActiveRecord::Base.connection.table_exists?(:phone_numbers)
   create_table :contacts do |t|
     t.column :first_name, :string
     t.column :last_name, :string

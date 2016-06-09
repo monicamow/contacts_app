@@ -1,10 +1,8 @@
-require_relative 'contact'
-
 # Interfaces between a user and their contact list. Reads from and writes to standard I/O.
 class ContactList
 
   # This method is called when no user arguments are given after the 'ruby contact_list.rb' command
-  def self.display_menu
+  def display_menu
     puts "Here is a list of available commands: \
     \n    new    - Create a new contact \
     \n    list   - List all contacts \
@@ -14,7 +12,7 @@ class ContactList
 
   # TODO: Implement user interaction. This should be the only file where you use `puts` and `gets`.
 
-  def self.run_program
+  def run_program
 
     # commands typed by use from terminal
     menu = {
@@ -31,28 +29,18 @@ class ContactList
 
       when "new"
 
-        puts "What is the name of the contact?"
-        name_input = STDIN.gets.chomp.strip
+        puts "What is the first name of the contact?"
+        fname_input = STDIN.gets.chomp.strip
 
-        duplicate_found = true
+        puts "What is the last name of the contact?"
+        lname_input = STDIN.gets.chomp.strip
 
-        while duplicate_found do
-          
-          puts "What is the email of the contact?"
-          email_input = STDIN.gets.chomp.strip
+        puts "What is the email of the contact?"
+        email_input = STDIN.gets.chomp.strip
 
-          # need array of <Contacts> NOT array of arrays
-          #puts Contact.new(name_input, email_input, new_id) # *** add ID to initialize
-
-          if Contact.unique_email?(email_input)
-            duplicate_found = false
-            new_contact = Contact.create(name_input, email_input)
-            puts "The contact, \"#{new_contact.name}\" (#{new_contact.email}), \
-            \nwas created with a new ID of #{new_contact.id}."
-          else
-            puts "Sorry, that email already exists."
-          end
-        end
+        new_contact = Contact.create(first_name: fname_input, last_name: lname_input, email: email_input)
+        puts "The contact, \"#{new_contact.first_name}\" (#{new_contact.email}), \
+        \nwas created with a new ID of #{new_contact.id}."
 
       when "update"
 
@@ -130,5 +118,3 @@ class ContactList
 
 end
 
-# code entry point
-ContactList.run_program
