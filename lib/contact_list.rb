@@ -24,7 +24,7 @@ class ContactList
       when "list"
         all_contacts = Contact.all
         all_contacts.each do |contact|
-          puts "#{contact.id}: #{contact.name} (#{contact.email})"
+          puts "#{contact.id}: #{contact.first_name} (#{contact.email})"
         end
 
       when "new"
@@ -54,12 +54,12 @@ class ContactList
         email_input = STDIN.gets.chomp.strip
 
         updated_contact = Contact.find(menu[:argument])
-        updated_contact.name = name_input
+        updated_contact.first_name = name_input
         updated_contact.email = email_input
         updated_contact.save
 
         puts "The contact with ID of #{updated_contact.id} was updated to: \
-        \n#{updated_contact.name} (#{updated_contact.email})"
+        \n#{updated_contact.first_name} (#{updated_contact.email})"
 
         end
 
@@ -71,7 +71,7 @@ class ContactList
           if found_id.nil?
             puts "not found"
           else
-            puts "ID: #{found_id.id}\nNAME: #{found_id.name}\nEMAIL: #{found_id.email}"
+            puts "ID: #{found_id.id}\nNAME: #{found_id.first_name}\nEMAIL: #{found_id.email}"
           end
         when nil
            puts "You must put what you want to show i.e. 'show 4'"
@@ -87,7 +87,7 @@ class ContactList
             puts "not found"
           else
             search_results.each do |contact|
-              puts "#{contact.id}: #{contact.name} (#{contact.email})"
+              puts "#{contact.id}: #{contact.first_name} (#{contact.email})"
             end
             puts "---\n#{search_results.size} records total"
           end

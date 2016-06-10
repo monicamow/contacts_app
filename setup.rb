@@ -20,21 +20,21 @@ puts 'CONNECTED'
 
 puts 'Setting up Database (recreating tables) ...'
 
-ActiveRecord::Schema.define do
-  drop_table :contacts if ActiveRecord::Base.connection.table_exists?(:contacts)
-  drop_table :phone_numbers if ActiveRecord::Base.connection.table_exists?(:phone_numbers)
-  create_table :contacts do |t|
-    t.column :first_name, :string
-    t.column :last_name, :string
-    t.column :email, :string
-    t.timestamps null: false
-  end
-  create_table :phone_numbers do |table|
-    table.references :contact
-    table.column :kind, :string
-    table.column :phone_number, :string
-    table.timestamps null: false
-  end
-end
+# ActiveRecord::Schema.define do
+#   drop_table :contacts if ActiveRecord::Base.connection.table_exists?(:contacts)
+#   drop_table :phone_numbers if ActiveRecord::Base.connection.table_exists?(:phone_numbers)
+#   create_table :contacts do |t|
+#     t.column :first_name, :string
+#     t.column :last_name, :string
+#     t.column :email, :string
+#     t.timestamps null: false
+#   end
+#   create_table :phone_numbers do |table|
+#     table.references :contact
+#     table.column :kind, :string
+#     table.column :phone_number, :string
+#     table.timestamps null: false
+#   end
+# end
 
 puts 'Setup DONE'
