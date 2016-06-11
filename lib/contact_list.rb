@@ -12,6 +12,17 @@ class ContactList
 
   # TODO: Implement user interaction. This should be the only file where you use `puts` and `gets`.
 
+  # REFACT EXPECTED RESULT
+  # def run_program
+  #   case menu[:command]
+  #   when "list"
+  #     list_command
+  #   when "new"
+  #     new_command
+  #   ....
+  #   end
+  # end
+
   def run_program
 
     # commands typed by use from terminal
@@ -22,25 +33,12 @@ class ContactList
 
     case menu[:command]
       when "list"
-        all_contacts = Contact.all
-        all_contacts.each do |contact|
+        Contact.all.each do |contact|
           puts "#{contact.id}: #{contact.first_name} (#{contact.email})"
         end
 
       when "new"
-
-        puts "What is the first name of the contact?"
-        fname_input = STDIN.gets.chomp.strip
-
-        puts "What is the last name of the contact?"
-        lname_input = STDIN.gets.chomp.strip
-
-        puts "What is the email of the contact?"
-        email_input = STDIN.gets.chomp.strip
-
-        new_contact = Contact.create(first_name: fname_input, last_name: lname_input, email: email_input)
-        puts "The contact, \"#{new_contact.first_name}\" (#{new_contact.email}), \
-        \nwas created with a new ID of #{new_contact.id}."
+        new_command
 
       when "update"
 
@@ -115,6 +113,28 @@ class ContactList
       end
 
   end
+
+  private 
+
+  def new_command
+    fname, lname, email = get_user_info
+    contact = Contact.create(first_name: fname, last_name: lname, email: email)
+    puts contact
+  end
+
+  def get_user_info
+    puts "What is the first name of the contact?"
+    fname = STDIN.gets.chomp.strip
+
+    puts "What is the last name of the contact?"
+    lname = STDIN.gets.chomp.strip
+
+    puts "What is the email of the contact?"
+    email = STDIN.gets.chomp.strip
+
+    [fname, lname, email]
+  end
+
 
 end
 

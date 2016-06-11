@@ -1,4 +1,4 @@
-require_relative './setup'
+require './setup'
 require './lib/contact_list'
 require './app/models/contact'
 require './app/models/phone_number'
